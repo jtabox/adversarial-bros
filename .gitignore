@@ -1,0 +1,5 @@
+help-repos/**
+model/**
+output/**
+!output/.output.images.here
+!model/.brogan.model.here
