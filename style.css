@@ -1,0 +1,17 @@
+#title {
+    text-align: center;
+}
+
+#description {
+    text-align: center;
+}
+
+#info-text {
+    text-align: left;
+}
+
+#result-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
