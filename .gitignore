@@ -1,8 +1,14 @@
 __pycache__
 *.pyc
+/*.txt
 
-help-repos/**
+codeformer/inputs/**
+codeformer/weights/CodeFormer/**
+codeformer/weights/facelib/**
 model/**
 output/**
+!codeformer/inputs/.input.images.here
+!codeformer/weights/CodeFormer/.codeformer.models.here
+!codeformer/weights/facelib/.facelib.models.here
 !output/.output.images.here
 !model/.brogan.model.here
