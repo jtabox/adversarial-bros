@@ -5,17 +5,25 @@ title = "# 👨🏻👨🏼👨🏽👨🏾👨🏿 Adversarial Bros 👨🏿�
 description = "A simple (yeah right) Gradio app that generates face photos of delicious (albeit imaginary) bros using BroGAN, a StyleGAN3 model."
 
 info_text = """
-<p>🔵 Start by choosing the image generation mode by selecting the appropriate tab. At the moment, there's two modes:</p>
-&emsp;&emsp;<b><u>Simple Image Generator:</u></b> Generates and displays a single image with a seed and truncation psi value of your choice. Used mainly for experimenting with the model's different parameters, figure out how they affect the result, etc.<br>
-&emsp;&emsp;<b><u>Bulk Generator:</u></b> Not yet implemented, but will allow generating and saving multiple images from various seeds in bulk.<br>
+<p>🔵 There's two function modes at the moment:</p>
+&emsp;&emsp;<u>Simple Image Generator:</u><br>
+&emsp;&emsp;- Generates and displays (and optionally saves) a single image with a seed and truncation psi value of your choice.<br>
+&emsp;&emsp;- Use mainly for experimenting with the model's different parameters, figure out how they affect the result, etc.<br>
+&emsp;&emsp;<u>Bulk Generator:</u><br>
+&emsp;&emsp;- Bulk generates and saves multiple images from various seeds and truncation psi values of your choice.<br>
 <br>
 <p>🔵 The generated images are in PNG format and have a size of 256x256 pixels.</p><br>
 <p>🔵 The available parameters are (in ignorant layman's terms):</p>
-&emsp;&emsp;<b><u>Seed:</u></b> Each seed is an integer and creates a unique face. There's almost <i>4.3 billion</i> seeds available for your visual pleasure.<br>
-&emsp;&emsp;<b><u>Truncation psi:</u></b> A decimal number ranging from 0 to 1. Values further away from 0 create more diverse faces but with worse quality. The recommended value is 0.7, but feel free to experiment.<br>
-&emsp;&emsp;<b><u>Negative psi:</u></b> The psi value above, but negative. Apparently the same value gives 2 different images when positive and negative. So this gives 2 options per psi value.<br>
+&emsp;&emsp;<u>Seed:</u><br>
+&emsp;&emsp;- Each seed is an integer and creates a unique face.<br>
+&emsp;&emsp;- There's almost <i>4.3 billion</i> seeds available for your visual pleasure.<br>
+&emsp;&emsp;<u>Truncation psi:</u><br>
+&emsp;&emsp;- A decimal number ranging from 0.00 to 1.00.<br>
+&emsp;&emsp;- Values further away from 0 create more diverse faces but with worse quality.<br>
+&emsp;&emsp;- The recommended value from BroGAN's creator is 0.7, but I think I've been getting better results with 0.6 or 0.65.<br>
+&emsp;&emsp;- Apparently, if the same psi value is negated, it gives a completely different image.<br>
 <br>
-<p>🔵 For more information about the model and other things, check the Credits section at the bottom of the page.</p>
+<p>🔵 Check the credits section at the bottom of the page for more information about the model, its theoretical background and more.</p>
 """
 
 bulk_info_text = """

@@ -67,15 +67,23 @@ def generate_single_image(model, seed, psi, neg_psi):
     return [image_result, str(seed), image_save_filename, output_text, button_text]
 
 
-def save_single_image(image_result, output_folder, image_save_filename, existing_output_text):
+def save_single_image(
+    image_result, output_folder, image_save_filename, existing_output_text
+):
     # Saves the generated single image
     if not image_result.any():
         return "<pre>No bro to save :(</pre>"
     if not os.path.exists(output_folder):
         os.makedirs(output_folder, exist_ok=True)
-    image_save_filename = image_save_filename if image_save_filename and image_save_filename != "" else f"{datetime.now().strftime('%Y%m%d%H%M')}_tmp_bro.png"
+    image_save_filename = (
+        image_save_filename
+        if image_save_filename and image_save_filename != ""
+        else f"{datetime.now().strftime('%Y%m%d%H%M')}_tmp_bro.png"
+    )
     # The image is in numpy array format, convert to PIL and save
-    Image.fromarray(image_result, "RGB").save(os.path.join(output_folder, image_save_filename))
+    Image.fromarray(image_result, "RGB").save(
+        os.path.join(output_folder, image_save_filename)
+    )
     return f"{existing_output_text}<br><pre>Bro saved.\nFile:\t{image_save_filename}\nFolder:\t{output_folder}</pre>"
 
 

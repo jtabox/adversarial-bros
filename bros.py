@@ -32,12 +32,8 @@ with gr.Blocks(
         output_folder = gr.Textbox(
             label="Output Folder", value=os.path.join(root_folder, output_folder)
         )
-        single_image_filepath = gr.Textbox(
-            label="Single Image Filepath", value=""
-        )
-        last_gen_seed = gr.Textbox(
-            label="Last Generation Seed", value=""
-        )
+        single_image_filepath = gr.Textbox(label="Single Image Filepath", value="")
+        last_gen_seed = gr.Textbox(label="Last Generation Seed", value="")
     gr.Markdown(value=title, elem_id="title")
     gr.Markdown(value=description, elem_id="description")
     with gr.Accordion(label="Information", elem_id="info-accordion", open=False):
@@ -105,6 +101,10 @@ with gr.Blocks(
                         format="png",
                         width=384,
                         height=384,
+                        show_label=False,
+                        type="numpy",
+                        sources=None,
+                        show_download_button=True,
                     )
                 with gr.Column():
                     simple_output_text = gr.HTML(
@@ -135,12 +135,23 @@ with gr.Blocks(
                     simple_psi_slider,
                     simple_neg_psi_checkbox,
                 ],
-                outputs=[simple_result_image, last_gen_seed, single_image_filepath, simple_output_text, simple_save_button],
+                outputs=[
+                    simple_result_image,
+                    last_gen_seed,
+                    single_image_filepath,
+                    simple_output_text,
+                    simple_save_button,
+                ],
             )
             simple_save_button.click(
                 fn=save_single_image,
                 show_progress=False,
-                inputs=[simple_result_image, output_folder, single_image_filepath, simple_output_text],
+                inputs=[
+                    simple_result_image,
+                    output_folder,
+                    single_image_filepath,
+                    simple_output_text,
+                ],
                 outputs=[simple_output_text],
             )
         with gr.Tab(label="Bulk Image Generator", elem_id="bulk-generator-tab"):
