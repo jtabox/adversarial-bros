@@ -1,7 +1,8 @@
 __pycache__
 *.pyc
-/*.txt
 
+pickle_path_converter.py
+_notes_n_stuff
 codeformer/inputs/**
 codeformer/weights/CodeFormer/**
 codeformer/weights/facelib/**
