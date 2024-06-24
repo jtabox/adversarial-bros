@@ -1,10 +1,8 @@
-# A gradio app for image generation using the BroGAN StyleGAN3 PyTorch model - Main interface file
-
+# A gradio app for image generation using the BroGAN StyleGAN3 PyTorch model - Main UI
 import os
 import gradio as gr
 
-from aux_bros.funcs import *
-from aux_bros.text_vars import *
+from aux_bros import text_variables, img_gen_functions, ui_functions
 
 root_folder = os.path.dirname(__file__)
 output_folder = "output"
@@ -34,10 +32,10 @@ with gr.Blocks(
         )
         single_image_filepath = gr.Textbox(label="Single Image Filepath", value="")
         last_gen_seed = gr.Textbox(label="Last Generation Seed", value="")
-    gr.Markdown(value=title, elem_id="title")
-    gr.Markdown(value=description, elem_id="description")
+    gr.Markdown(value=text_variables.title, elem_id="title")
+    gr.Markdown(value=text_variables.description, elem_id="description")
     with gr.Accordion(label="Information", elem_id="info-accordion", open=False):
-        gr.HTML(value=info_text, elem_id="info-text")
+        gr.HTML(value=text_variables.info_text, elem_id="info-text")
     with gr.Tabs():
         with gr.Tab(label="Simple Image Generator", elem_id="simple-generator-tab"):
             with gr.Row():
@@ -92,7 +90,9 @@ with gr.Blocks(
                         value="👨 Generate a bro 👨", variant="primary", size="lg"
                     )
                     simple_save_button = gr.Button(
-                        value=save_single_image_button_text, variant="primary", size="sm"
+                        value=text_variables.save_single_image_button_text,
+                        variant="primary",
+                        size="sm",
                     )
                 with gr.Column():
                     simple_result_image = gr.Image(
@@ -115,19 +115,19 @@ with gr.Blocks(
                         elem_classes="output-text",
                     )
             simple_seed_random_button.click(
-                fn=set_gen_seed,
+                fn=ui_functions.set_gen_seed,
                 show_progress=False,
                 inputs=[],
                 outputs=[simple_seed_num],
             )
             simple_seed_recycle_button.click(
-                fn=set_gen_seed,
+                fn=ui_functions.set_gen_seed,
                 show_progress=False,
                 inputs=[last_gen_seed],
                 outputs=[simple_seed_num],
             )
             simple_generate_button.click(
-                fn=generate_single_image,
+                fn=img_gen_functions.generate_single_image,
                 show_progress=False,
                 inputs=[
                     model_file,
@@ -144,7 +144,7 @@ with gr.Blocks(
                 ],
             )
             simple_save_button.click(
-                fn=save_single_image,
+                fn=ui_functions.save_single_image,
                 show_progress=False,
                 inputs=[
                     simple_result_image,
@@ -158,7 +158,7 @@ with gr.Blocks(
             with gr.Accordion(
                 label="How to use", elem_id="bulk-usage-info-accordion", open=False
             ):
-                gr.HTML(value=bulk_info_text, elem_id="bulk-info-text")
+                gr.HTML(value=text_variables.bulk_info_text, elem_id="bulk-info-text")
             with gr.Row():
                 bulk_amount_textbox = gr.Number(
                     label="1. Amount of images to generate randomly",
@@ -217,13 +217,13 @@ with gr.Blocks(
                     value="📁 Set output folder", variant="secondary"
                 )
                 open_output_folder_button = gr.Button(
-                    value=f"{open_output_folder_button_text} ({output_folder.value})",
+                    value=f"{text_variables.open_output_folder_button_text} ({output_folder.value})",
                     variant="secondary",
                     size="sm",
                     elem_id="open-output-folder-button",
                 )
             bulk_generate_button.click(
-                fn=bulk_generate_images,
+                fn=img_gen_functions.bulk_generate_images,
                 inputs=[
                     model_file,
                     bulk_seed_textbox,
@@ -234,30 +234,30 @@ with gr.Blocks(
                 outputs=[bulk_output_text],
             )
             bulk_amount_textbox.change(
-                fn=bulk_update_amount,
+                fn=ui_functions.bulk_update_amount,
                 inputs=[bulk_amount_textbox, bulk_seed_textbox, bulk_psi_values],
                 outputs=[bulk_generate_button, bulk_output_text],
             )
             bulk_seed_textbox.change(
-                fn=bulk_update_amount,
+                fn=ui_functions.bulk_update_amount,
                 inputs=[bulk_amount_textbox, bulk_seed_textbox, bulk_psi_values],
                 outputs=[bulk_generate_button, bulk_output_text],
             )
             bulk_psi_values.change(
-                fn=bulk_update_amount,
+                fn=ui_functions.bulk_update_amount,
                 inputs=[bulk_amount_textbox, bulk_seed_textbox, bulk_psi_values],
                 outputs=[bulk_generate_button, bulk_output_text],
             )
             bulk_save_destination_button.click(
-                fn=set_output_folder,
+                fn=ui_functions.set_output_folder,
                 inputs=bulk_save_destination,
                 outputs=[output_folder, open_output_folder_button],
             )
             open_output_folder_button.click(
-                fn=open_output_folder, inputs=output_folder, outputs=[]
+                fn=ui_functions.open_output_folder, inputs=output_folder, outputs=[]
             )
     with gr.Accordion(label="Credits", elem_id="credits-accordion", open=False):
-        gr.Markdown(value=credits_text, elem_id="credits-text")
+        gr.Markdown(value=text_variables.credits_text, elem_id="credits-text")
 
 if __name__ == "__main__":
     main_ui.launch(inbrowser=True)

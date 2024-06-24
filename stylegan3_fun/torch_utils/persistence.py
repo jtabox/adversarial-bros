@@ -22,7 +22,8 @@ import uuid
 import types
 from stylegan3_fun import dnnlib
 
-from aux_bros.path_utils import * # Custom extra line, used for converting module paths
+# Extra import, used for converting module paths to new ones
+from aux_bros import support_functions
 
 #----------------------------------------------------------------------------
 
@@ -210,7 +211,8 @@ def _module_to_src(module):
     """
     src = _module_to_src_dict.get(module, None)
     if src is None:
-        module = update_module_path(module) # Custom extra line, used for converting module paths
+        # Convert the module's path to the new one if applicable
+        module = support_functions.update_module_path(module)
         src = inspect.getsource(module)
         _module_to_src_dict[module] = src
         _src_to_module_dict[src] = module
@@ -221,7 +223,8 @@ def _src_to_module(src):
     """
     module = _src_to_module_dict.get(src, None)
     if module is None:
-        src = update_imports_in_code(src) # Custom extra line, used for converting module paths
+        # Convert any applicable module paths in the source string to the new ones
+        src = support_functions.update_imports_in_code(src)
         module_name = "_imported_module_" + uuid.uuid4().hex
         module = types.ModuleType(module_name)
         sys.modules[module_name] = module
