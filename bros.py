@@ -92,7 +92,7 @@ with gr.Blocks(
                         value="👨 Generate a bro 👨", variant="primary", size="lg"
                     )
                     simple_save_button = gr.Button(
-                        value="💾 Save the bro", variant="primary", size="sm"
+                        value=save_single_image_button_text, variant="primary", size="sm"
                     )
                 with gr.Column():
                     simple_result_image = gr.Image(
@@ -217,7 +217,7 @@ with gr.Blocks(
                     value="📁 Set output folder", variant="secondary"
                 )
                 open_output_folder_button = gr.Button(
-                    value=f"📂 Open output folder ({output_folder.value})",
+                    value=f"{open_output_folder_button_text} ({output_folder.value})",
                     variant="secondary",
                     size="sm",
                     elem_id="open-output-folder-button",

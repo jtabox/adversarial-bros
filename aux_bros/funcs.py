@@ -9,7 +9,7 @@ from PIL import Image
 
 from stylegan3_fun import legacy, dnnlib
 from stylegan3_fun.gen_images import make_transform
-
+from . import text_vars
 
 def set_gen_seed(seed_text=""):
     # Sets the seed to either random or the last generated seed
@@ -32,9 +32,9 @@ def prepare_model(model):
 
 def create_image(seed, psi, device, G, label):
     # Generate image function part 2 - modified from stylegan3_fun.gen_images.generate_images
-    noise_mode = (
-        "const"  # 'const', 'random', 'none' - doesn't seem to make a difference
-    )
+    noise_mode = "const"
+    # can be 'const', 'random', 'none' - doesn't seem to make a difference
+
     translate = (0, 0)
     rotate = 0
     z = torch.from_numpy(np.random.RandomState(seed).randn(1, G.z_dim)).to(device)
@@ -63,7 +63,7 @@ def generate_single_image(model, seed, psi, neg_psi):
     # Return the image and the text with used seed
     output_text = f"<pre>Seed:\t{seed}\npsi:\t{psi}</pre>"
     image_save_filename = f"{datetime.now().strftime('%Y%m%d%H%M')}_{seed}_{str(psi).replace('-', 'n').replace('.', '')}.png"
-    button_text = f"💾 Save the bro as {image_save_filename}"
+    button_text = f"{text_vars.save_single_image_button_text} as {image_save_filename}"
     return [image_result, str(seed), image_save_filename, output_text, button_text]
 
 
@@ -158,14 +158,14 @@ def open_output_folder(output_folder):
 
 def set_output_folder(output_folder):
     if os.path.exists(output_folder) and os.path.isdir(output_folder):
-        return [output_folder, f"📁 Open output folder ({output_folder})"]
+        return [output_folder, f"{text_vars.open_output_folder_button_text} ({output_folder})"]
     elif not os.path.exists(output_folder):
         os.makedirs(output_folder, exist_ok=True)
-        return [output_folder, f"📁 Open output folder ({output_folder})"]
+        return [output_folder, f"{text_vars.open_output_folder_button_text} ({output_folder})"]
     else:
         return [
             os.path.join(os.path.dirname(__file__), "output"),
-            f"📁 Open output folder ({os.path.join(os.path.dirname(__file__), 'output')})",
+            f"{text_vars.open_output_folder_button_text} ({os.path.join(os.path.dirname(__file__), 'output')})",
         ]
 
 
@@ -252,7 +252,7 @@ def bulk_update_amount(user_amount, seeds, psi_values):
     else:
         # User entered a valid amount, use that
         result_amount = int(user_amount)
-        output_text = f"Generated image amount found, will use it to create {result_amount} bros with random seeds and a psi value of 0.65."
+        output_text = f"Valid generated image amount specified, will use it to create {result_amount} bros with random seeds and a psi value of 0.65."
     # Return the label with "no" if 0
     result_amount = "no" if result_amount == 0 else result_amount
     output_text = f"<pre>{output_text}</pre>"

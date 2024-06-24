@@ -4,6 +4,9 @@ title = "# 👨🏻👨🏼👨🏽👨🏾👨🏿 Adversarial Bros 👨🏿�
 
 description = "A simple (yeah right) Gradio app that generates face photos of delicious (albeit imaginary) bros using BroGAN, a StyleGAN3 model."
 
+open_output_folder_button_text = "📂 Open output folder"
+save_single_image_button_text = "💾 Save the bro"
+
 info_text = """
 <p>🔵 There's two function modes at the moment:</p>
 &emsp;&emsp;<u>Simple Image Generator:</u><br>
