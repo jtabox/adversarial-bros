@@ -62,7 +62,7 @@ def generate_single_image(model, seed, psi, neg_psi):
     image_result = create_image(seed, psi, device, G, label)
     # Return the image and the text with used seed
     output_text = f"<pre>Seed:\t{seed}\npsi:\t{psi}</pre>"
-    image_save_filename = f"{datetime.now().strftime('%Y%m%d%H%M')}_{seed}_{str(psi).replace('-', 'm').replace('.', '')}.png"
+    image_save_filename = f"{datetime.now().strftime('%Y%m%d%H%M')}_{seed}_{str(psi).replace('-', 'n').replace('.', '')}.png"
     button_text = f"💾 Save the bro as {image_save_filename}"
     return [image_result, str(seed), image_save_filename, output_text, button_text]
 
@@ -120,7 +120,7 @@ def bulk_generate_images(model, seeds, psi_values, user_amount, output_folder):
                     f"*** Bros ***: Generating image {counter}/{tasks_amount} (seed: {seed}, psi: {psi})"
                 )
                 image_result = create_image(seed, psi, device, G, label)
-                image_filename = f"{str(counter).zfill(4)}_{datetime.now().strftime('%Y%m%d%H%M')}_{seed}_{str(psi).replace('-', 'm').replace('.', '')}.png"
+                image_filename = f"{str(counter).zfill(4)}_{datetime.now().strftime('%Y%m%d%H%M')}_{seed}_{str(psi).replace('-', 'n').replace('.', '')}.png"
                 print(
                     f"*** Bros ***: Saving image {counter}/{tasks_amount} as {image_filename}"
                 )

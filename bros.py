@@ -260,4 +260,4 @@ with gr.Blocks(
         gr.Markdown(value=credits_text, elem_id="credits-text")
 
 if __name__ == "__main__":
-    main_ui.launch()
+    main_ui.launch(inbrowser=True)

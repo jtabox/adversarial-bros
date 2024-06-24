@@ -48,7 +48,8 @@ bulk_info_text = """
 
 credits_text = """
 - Huggingface user [**quartzermz**](https://huggingface.co/quartzermz), who did God's work and created [**BroGAN**](https://huggingface.co/quartzermz/BroGANv1.0.0), a StyleGAN3 model for PyTorch.
-- [**NVlabs**](https://github.com/NVlabs/stylegan3) at NVIDIA, who created the StyleGAN3 model that BroGAN is based on, and whose code is used in this app as a backend.
-- GitHub user [**ZerxiesDerxies**](https://github.com/zerxiesderxies), author of the very helpful rentry.co guide [**'A men-only SD Webui Guide to running BroGAN'**](https://rentry.co/uoza8fqp), with a lot of info about BroGAN.
-- Users at the **#men-only channel** on the [**Unstable Diffusion Discord server**](https://discord.gg/unstablediffusion), by who I was made aware of BroGAN (and other  *t a s t y*  #men-only generative-AI stuff 😏).
+- [**NVlabs**](https://github.com/NVlabs/stylegan3) at NVIDIA, creators of the StyleGAN3 model that BroGAN is based on, and GitHub user [**PDillis**](https://github.com/PDillis) and their stylegan3 fork, [**stylegan3-fun**](https://github.com/PDillis/stylegan3-fun) whose code I've used as a backend here.
+- GitHub user [**ZerxiesDerxies**](https://github.com/zerxiesderxies), author of the very helpful rentry.co guide [**'A men-only SD Webui Guide to running BroGAN'**](https://rentry.co/uoza8fqp), with a lot of info about BroGAN. And also author of the [**relevant A1111 extension**](https://github.com/zerxiesderxies/sd-webui-gan-generator/), which was the initial inspiration for this project.
+- The devs of [**CodeFormer**](https://github.com/sczhou/CodeFormer), which is used to upscale the photos in this project.
+- Users at the **#men-only channel** on the [**Unstable Diffusion Discord server**](https://discord.gg/unstablediffusion), by who I was made aware of BroGAN.
 """
