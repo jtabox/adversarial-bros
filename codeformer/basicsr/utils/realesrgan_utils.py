@@ -51,7 +51,7 @@ class RealESRGANer():
         #     self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') if device is None else device
 
         self.device = get_device(gpu_id) if device is None else device
-        
+
         # if the model_path starts with https, it will first download models to the folder: realesrgan/weights
         if model_path.startswith('https://'):
             model_path = load_file_from_url(
@@ -212,9 +212,9 @@ class RealESRGANer():
                 if img_mode == 'L':
                     output_img = cv2.cvtColor(output_img, cv2.COLOR_BGR2GRAY)
             del output_img_t
-            torch.cuda.empty_cache()        
+            torch.cuda.empty_cache()
         except RuntimeError as error:
-            print(f"Failed inference for RealESRGAN: {error}")      
+            print(f"Failed inference for RealESRGAN: {error}")
 
         # ------------------- process the alpha channel if necessary ------------------- #
         if img_mode == 'RGBA':

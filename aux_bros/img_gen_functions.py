@@ -35,7 +35,34 @@ def create_image(seed, psi, device, G, label):
         G.synthesis.input.transform.copy_(torch.from_numpy(m))
     img = G(z, label, truncation_psi=psi, noise_mode=noise_mode)
     img = (img.permute(0, 2, 3, 1) * 127.5 + 128).clamp(0, 255).to(torch.uint8)
-    return Image.fromarray(img[0].cpu().numpy(), "RGB")
+    pil_image = Image.fromarray(img[0].cpu().numpy(), "RGB")
+    return process_borders(pil_image)
+
+
+def process_borders(image: Image.Image) -> Image.Image:
+    # convert to numpy
+    img_array = np.array(image)
+    original_height, original_width = img_array.shape[:2]
+    # function to check if borders exist
+    def find_border_width(arr, threshold=10):
+        for i in range(len(arr)):
+            if np.mean(np.abs(arr[i] - arr[0])) > threshold:
+                return i
+        return 0
+    # run it for all sides
+    top_border = find_border_width(img_array)
+    bottom_border = find_border_width(img_array[::-1])
+    left_border = find_border_width(img_array.transpose(1, 0, 2))
+    right_border = find_border_width(img_array.transpose(1, 0, 2)[::-1])
+    if top_border == bottom_border == left_border == right_border == 0:
+        # no borders found
+        return image
+    # crop the borders
+    cropped_array = img_array[top_border:original_height-bottom_border, left_border:original_width-right_border]
+    # back to PIL type and resize
+    cropped_image = Image.fromarray(cropped_array)
+    resized_image = cropped_image.resize((original_width, original_height), Image.LANCZOS)
+    return resized_image
 
 
 def generate_single_image(model, seed, psi, neg_psi):
