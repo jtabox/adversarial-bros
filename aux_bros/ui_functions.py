@@ -6,8 +6,9 @@ from PIL import Image
 from . import text_variables, support_functions
 
 
-def set_gen_seed(seed_text: str = "") -> int:
-    """Returns an image generation seed, depending on how it's called. No argument or an empty string returns -1 for random.
+def set_gen_seed(seed_text: str = '') -> int:
+    """Is called when the user presses the button to set a random seed, or use last gen's seed.
+    If called without argument or with an empty string returns -1 for random image generation seed.
     Otherwise parses the string passed and returns the seed.
 
     Args:

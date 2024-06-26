@@ -16,7 +16,8 @@ import uuid
 
 import torch
 import torch.utils.cpp_extension
-from torch.utils.file_baton import FileBaton
+# from torch.utils.file_baton import FileBaton
+
 
 #----------------------------------------------------------------------------
 # Global options.
@@ -70,13 +71,34 @@ def get_plugin(module_name, sources, headers=None, source_dir=None, **build_kwar
 
     # Print status.
     if verbosity == 'full':
-        print(f'Setting up PyTorch plugin "{module_name}"...')
+        print(f'*** Bros ***: PyTorch plugin "{module_name}" requested.')
     elif verbosity == 'brief':
-        print(f'Setting up PyTorch plugin "{module_name}"... ', end='', flush=True)
+        print(f'*** Bros ***: PyTorch plugin "{module_name}" requested...', end='', flush=True)
     verbose_build = (verbosity == 'full')
 
     # Compile and load.
     try: # pylint: disable=too-many-nested-blocks
+
+        # Try Loading Module First:
+        try:
+            if verbosity == 'full':
+                print('*** Bros ***: Checking for cached version to load.')
+            from cuda_plugins import load_plugin
+            module = load_plugin(module_name)
+            if verbosity == 'full':
+                print('*** Bros ***: Built cached version detected and loaded successfully.')
+            elif verbosity == 'brief':
+                print('Cached version detected and loaded.')
+            _cached_plugins[module_name] = module
+            return module
+        except Exception as e:
+            if verbosity == 'full':
+                print(e)
+                print('*** Bros ***: Could not find and/or load a cached version, proceeding to build one.')
+            elif verbosity == 'brief':
+                print('No cached version available, building instead.')
+
+
         # Make sure we can find the necessary compiler binaries.
         if os.name == 'nt' and os.system("where cl.exe >nul 2>nul") != 0:
             compiler_bindir = _find_compiler_bindir()

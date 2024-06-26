@@ -5,8 +5,8 @@ import gradio as gr
 from aux_bros import text_variables, img_gen_functions, ui_functions
 
 root_folder = os.path.dirname(__file__)
-output_folder = "output"
-model_folder = "model"
+output_folder = "outputs"
+model_folder = "models/gan"
 model_filename = "BroGANv1.0.0-upd-paths2-optimized.pkl"
 
 with gr.Blocks(
@@ -105,6 +105,7 @@ with gr.Blocks(
                         type="numpy",
                         sources=None,
                         show_download_button=True,
+                        container=True,
                     )
                 with gr.Column():
                     simple_output_text = gr.HTML(
