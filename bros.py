@@ -103,9 +103,10 @@ with gr.Blocks(
                         height=384,
                         show_label=False,
                         type="numpy",
-                        sources=None,
                         show_download_button=True,
-                        container=True,
+                        container=False,
+                        interactive=False,
+                        sources=None,
                     )
                 with gr.Column():
                     simple_output_text = gr.HTML(
@@ -115,6 +116,11 @@ with gr.Blocks(
                         visible=True,
                         elem_classes="output-text",
                     )
+                    # gr.Image(
+                    #     format="png",
+                    #     show_download_button=True,
+                    #     sources=[],
+                    # )
             simple_seed_random_button.click(
                 fn=ui_functions.set_gen_seed,
                 show_progress=False,

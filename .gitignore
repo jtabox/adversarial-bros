@@ -1,10 +1,12 @@
 __pycache__
 *.pyc
+*.ipynb
 
+_notes_n_stuff
+.aider*
 pickle_path_converter.py
 build_torch_plugins.py
 
-_notes_n_stuff
 
 cuda_plugins/**
 codeformer/inputs/**

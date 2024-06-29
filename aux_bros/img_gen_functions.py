@@ -54,14 +54,14 @@ def process_borders(image: Image.Image) -> Image.Image:
     bottom_border = find_border_width(img_array[::-1])
     left_border = find_border_width(img_array.transpose(1, 0, 2))
     right_border = find_border_width(img_array.transpose(1, 0, 2)[::-1])
-    print(f"*** Bros ***: Borders: top {top_border}, bottom {bottom_border}, left {left_border}, right {right_border}")
+    # print(f"*** Bros ***: Borders: top {top_border}, bottom {bottom_border}, left {left_border}, right {right_border}")
     # if top_border <= 1 and bottom_border <= 1 and left_border <= 1 and right_border <= 1:
     #     # no borders found
     #     return image
     # crop the borders
     cropped_array = img_array[top_border:original_height-bottom_border, left_border:original_width-right_border]
-    cropped_height, cropped_width = cropped_array.shape[:2]
-    print(f"*** Bros ***: Cropped image size: {cropped_width}x{cropped_height}")
+    # cropped_height, cropped_width = cropped_array.shape[:2]
+    # print(f"*** Bros ***: Cropped image size: {cropped_width}x{cropped_height}")
     # back to PIL type and resize
     cropped_image = Image.fromarray(cropped_array)
     resized_image = cropped_image.resize((original_width, original_height), Image.LANCZOS)
