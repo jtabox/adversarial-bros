@@ -8,6 +8,8 @@ Plans:
 * Decide what to do with upscaling which was kinda a failure/not really implemented in v1
 * I wanna train in Qt Python stuff, so I'll try implementing a Qt GUI
 
+[v2 has its own branch](https://github.com/jtabox/adversarial-bros/tree/brogan-v2-qt "To v2 branch")
+
 # v1 stuff below:
 
 ### 👨🏻👨🏼👨🏽👨🏾👨🏿 Adversarial Bros 👨🏿👨🏾👨🏽👨🏼👨🏻
