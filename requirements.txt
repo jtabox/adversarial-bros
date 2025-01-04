@@ -1,0 +1,2 @@
+torch
+setuptools<=72.1.0

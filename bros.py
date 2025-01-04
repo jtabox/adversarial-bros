@@ -101,7 +101,6 @@ with gr.Blocks(
                         format="png",
                         width=384,
                         height=384,
-                        show_label=False,
                         type="numpy",
                         show_download_button=True,
                         container=False,
