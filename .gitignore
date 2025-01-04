@@ -3,12 +3,12 @@ __pycache__
 *.ipynb
 
 _notes_n_stuff
-.aider*
 pickle_path_converter.py
 build_torch_plugins.py
 
 
 cuda_plugins/**
+cuda_plugins/cached_builds/**
 codeformer/inputs/**
 codeformer/weights/**
 models/codeformer/**
@@ -17,6 +17,8 @@ models/gan/**
 outputs/**
 
 !cuda_plugins/__init__.py
+!cuda_plugins/cached_builds
+!cuda_plugins/cached_builds/.built_plugins_cache
 !models/.various.models.and.weights
 !models/codeformer/.codeformer.models
 !models/facelib/.facelib.models
