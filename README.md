@@ -1,3 +1,17 @@
+### Update 2025-01-04 - v2 on the way:
+
+BroGAN v2 [is out](https://huggingface.co/quartzermz/BroGANv2.0.0 "To BroGAN v.2 hf repo"), so I guess it's time for an update (or rather a rework, since I'll be trying - and probably failing - to implement a Qt GUI).
+
+Plans:
+
+* Add option to use BroGAN v2 and v2.1
+* Decide what to do with upscaling which was kinda a failure/not really implemented in v1
+* I wanna train in Qt Python stuff, so I'll try implementing a Qt GUI
+
+[v2 has its own branch](https://github.com/jtabox/adversarial-bros/tree/brogan-v2-qt "To v2 branch")
+
+# v1 stuff below:
+
 ### 👨🏻👨🏼👨🏽👨🏾👨🏿 Adversarial Bros 👨🏿👨🏾👨🏽👨🏼👨🏻
 
 **A simple (my ass) Gradio app that generates face photos of delicious imaginary bros using BroGAN, a StyleGAN3 model.**
