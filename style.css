@@ -16,7 +16,7 @@
     margin-right: auto;
 }
 
-#simple-neg-psi-checkbox {
+#simple-neg-psi-checkbox, #simple-seed-number {
     display: flex;
     align-content: center;
     justify-content: start;

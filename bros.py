@@ -2,12 +2,10 @@
 import os
 import gradio as gr
 
-from aux_bros import text_variables, img_gen_functions, ui_functions
-
-root_folder = os.path.dirname(__file__)
-output_folder = "outputs"
-model_folder = os.path.join("models", "gan")
-model_filename = "BroGANv2.1.0_alt-upd-paths-optimized.pkl"
+from aux_bros import text_variables
+from aux_bros.ui_functions import root_folder, model_folder, output_folder
+from aux_bros.ui_functions import set_gen_seed, save_single_image, bulk_update_amount, set_output_folder, open_output_folder, scan_model_folder
+from aux_bros.img_gen_functions import generate_single_image, bulk_generate_images
 
 with gr.Blocks(
     theme=gr.themes.Base(
@@ -24,8 +22,9 @@ with gr.Blocks(
     css="style.css",
 ) as main_ui:
     with gr.Group(visible=False):
+        #! Change the value to be taken from the dropdown list
         model_file = gr.Textbox(
-            label="Model", value=os.path.join(root_folder, model_folder, model_filename)
+            label="Model", value=scan_model_folder(model_folder=model_folder)[0]
         )
         output_folder = gr.Textbox(
             label="Output Folder", value=os.path.join(root_folder, output_folder)
@@ -54,22 +53,57 @@ with gr.Blocks(
                         )
                         simple_neg_psi_checkbox = gr.Checkbox(
                             value=False,
-                            label="Negative psi",
+                            label="Negate psi",
                             info="Uses the negative of the psi value, which creates a completely different image than the positive one.",
                             interactive=True,
                             elem_id="simple-neg-psi-checkbox",
                             scale=1,
                         )
-                    simple_seed_num = gr.Number(
-                        label="Seed",
-                        info="The seed used to generate the image. Can be between 0 and 4294967295, or -1 for a random seed.",
-                        value=-1,
-                        precision=0,
-                        interactive=True,
-                        minimum=-1,
-                        maximum=4294967295,
-                        step=1,
-                        elem_id="simple-seed-number",
+                    with gr.Row():
+                        simple_model_dropdown = gr.Dropdown(
+                            label="Model",
+                            info=f"The StyleGAN3 model to use for generating the image. Looks for .pkl files in {model_folder}.",
+                            choices=scan_model_folder(model_folder=model_folder),
+                            elem_id="simple-model-dropdown",
+                            interactive=True,
+                            container=True,
+                            scale=2,
+                        )
+                        simple_seed_num = gr.Number(
+                            label="Seed",
+                            info="The seed used to generate the image. Can be between 0 and 4294967295, or -1 for a random seed.",
+                            value=-1,
+                            precision=0,
+                            interactive=True,
+                            minimum=-1,
+                            maximum=4294967295,
+                            step=1,
+                            elem_id="simple-seed-number",
+                            scale=1,
+                        )
+                with gr.Column():
+                    simple_result_image = gr.Image(
+                        label="Result",
+                        elem_id="simple-result-image",
+                        format="png",
+                        width=280,
+                        height=280,
+                        type="numpy",
+                        show_download_button=True,
+                        # show_label=False,
+                        # container=False,
+                        interactive=False,
+                        sources=None,
+                    )
+            with gr.Row():
+                with gr.Column():
+                    simple_generate_button = gr.Button(
+                        value="👨 Generate a bro 👨", variant="primary", size="lg"
+                    )
+                    simple_save_button = gr.Button(
+                        value=text_variables.save_single_image_button_text,
+                        variant="primary",
+                        size="sm",
                     )
                 with gr.Column(scale=1):
                     simple_seed_random_button = gr.Button(
@@ -84,30 +118,6 @@ with gr.Blocks(
                         elem_id="simple-seed-recycle-button",
                         scale=1,
                     )
-            with gr.Row():
-                with gr.Column():
-                    simple_generate_button = gr.Button(
-                        value="👨 Generate a bro 👨", variant="primary", size="lg"
-                    )
-                    simple_save_button = gr.Button(
-                        value=text_variables.save_single_image_button_text,
-                        variant="primary",
-                        size="sm",
-                    )
-                with gr.Column():
-                    simple_result_image = gr.Image(
-                        label="Result",
-                        elem_id="simple-result-image",
-                        format="png",
-                        width=384,
-                        height=384,
-                        type="numpy",
-                        show_download_button=True,
-                        # show_label=False,
-                        container=False,
-                        interactive=False,
-                        sources=None,
-                    )
                 with gr.Column():
                     simple_output_text = gr.HTML(
                         label="Output",
@@ -121,20 +131,25 @@ with gr.Blocks(
                     #     show_download_button=True,
                     #     sources=[],
                     # )
+            simple_model_dropdown.change(
+                fn=lambda x: os.path.join(root_folder, model_folder, x),
+                inputs=[simple_model_dropdown],
+                outputs=[model_file],
+            )
             simple_seed_random_button.click(
-                fn=ui_functions.set_gen_seed,
+                fn=set_gen_seed,
                 show_progress=False,
                 inputs=[],
                 outputs=[simple_seed_num],
             )
             simple_seed_recycle_button.click(
-                fn=ui_functions.set_gen_seed,
+                fn=set_gen_seed,
                 show_progress=False,
                 inputs=[last_gen_seed],
                 outputs=[simple_seed_num],
             )
             simple_generate_button.click(
-                fn=img_gen_functions.generate_single_image,
+                fn=generate_single_image,
                 show_progress=False,
                 inputs=[
                     model_file,
@@ -151,7 +166,7 @@ with gr.Blocks(
                 ],
             )
             simple_save_button.click(
-                fn=ui_functions.save_single_image,
+                fn=save_single_image,
                 show_progress=False,
                 inputs=[
                     simple_result_image,
@@ -230,7 +245,7 @@ with gr.Blocks(
                     elem_id="open-output-folder-button",
                 )
             bulk_generate_button.click(
-                fn=img_gen_functions.bulk_generate_images,
+                fn=bulk_generate_images,
                 inputs=[
                     model_file,
                     bulk_seed_textbox,
@@ -241,27 +256,27 @@ with gr.Blocks(
                 outputs=[bulk_output_text],
             )
             bulk_amount_textbox.change(
-                fn=ui_functions.bulk_update_amount,
+                fn=bulk_update_amount,
                 inputs=[bulk_amount_textbox, bulk_seed_textbox, bulk_psi_values],
                 outputs=[bulk_generate_button, bulk_output_text],
             )
             bulk_seed_textbox.change(
-                fn=ui_functions.bulk_update_amount,
+                fn=bulk_update_amount,
                 inputs=[bulk_amount_textbox, bulk_seed_textbox, bulk_psi_values],
                 outputs=[bulk_generate_button, bulk_output_text],
             )
             bulk_psi_values.change(
-                fn=ui_functions.bulk_update_amount,
+                fn=bulk_update_amount,
                 inputs=[bulk_amount_textbox, bulk_seed_textbox, bulk_psi_values],
                 outputs=[bulk_generate_button, bulk_output_text],
             )
             bulk_save_destination_button.click(
-                fn=ui_functions.set_output_folder,
+                fn=set_output_folder,
                 inputs=bulk_save_destination,
                 outputs=[output_folder, open_output_folder_button],
             )
             open_output_folder_button.click(
-                fn=ui_functions.open_output_folder, inputs=output_folder, outputs=[]
+                fn=open_output_folder, inputs=output_folder, outputs=[]
             )
     with gr.Accordion(label="Credits", elem_id="credits-accordion", open=False):
         gr.Markdown(value=text_variables.credits_text, elem_id="credits-text")

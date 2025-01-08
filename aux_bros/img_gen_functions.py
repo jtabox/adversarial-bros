@@ -8,7 +8,8 @@ from PIL import Image
 
 from stylegan3_fun import legacy, dnnlib
 from stylegan3_fun.gen_images import make_transform
-from . import text_variables, support_functions
+from .ui_functions import parse_parameter_string, root_folder, output_folder, model_folder
+from . import text_variables
 
 
 def prepare_model(model):
@@ -82,7 +83,7 @@ def generate_single_image(model, seed, psi, neg_psi):
     print(f"*** Bros ***: Generating single image with seed: {seed} and psi: {psi}")
     image_result = create_image(seed, psi, device, G, label)
     # Return the image and the text with used seed
-    output_text = f"<pre>Seed:\t{seed}\npsi:\t{psi}</pre>"
+    output_text = f"<pre>The bro's seed:\t{seed}\nThe bro's psi:\t{psi}</pre>"
     image_save_filename = f"{datetime.now().strftime('%Y%m%d%H%M')}_{seed}_{str(psi).replace('-', 'n').replace('.', '')}.png"
     button_text = (
         f"{text_variables.save_single_image_button_text} as {image_save_filename}"
@@ -95,8 +96,8 @@ def bulk_generate_images(model, seeds, psi_values, user_amount, output_folder):
     if not user_amount or user_amount == "" or user_amount == 0:
         # User specified the amount as 0 or blank, use seeds and psi_values
         user_amount = 0
-        seeds_list = support_functions.parse_parameter_string(seeds)
-        psi_list = support_functions.parse_parameter_string(psi_values, "psi")
+        seeds_list = parse_parameter_string(seeds)
+        psi_list = parse_parameter_string(psi_values, "psi")
         if len(seeds_list) == 0:
             # No valid seeds found, so no bros
             return "<pre>No valid seeds found, so no bros :(</pre>"
