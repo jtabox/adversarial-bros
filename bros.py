@@ -6,8 +6,8 @@ from aux_bros import text_variables, img_gen_functions, ui_functions
 
 root_folder = os.path.dirname(__file__)
 output_folder = "outputs"
-model_folder = "models/gan"
-model_filename = "BroGANv1.0.0-upd-paths2-optimized.pkl"
+model_folder = os.path.join("models", "gan")
+model_filename = "BroGANv2.1.0_alt-upd-paths-optimized.pkl"
 
 with gr.Blocks(
     theme=gr.themes.Base(
@@ -103,6 +103,7 @@ with gr.Blocks(
                         height=384,
                         type="numpy",
                         show_download_button=True,
+                        # show_label=False,
                         container=False,
                         interactive=False,
                         sources=None,
