@@ -25,12 +25,25 @@ def set_gen_seed(seed_text: str = '') -> int:
     return int(str(seed_text).strip())
 
 
-def open_output_folder(output_folder):
+def open_output_folder(output_folder: str) -> None:
+    """Opens the output folder in file explorer.
+
+    Args:
+        output_folder (str): The path to the output folder.
+    """
     if os.path.exists(output_folder) and os.path.isdir(output_folder):
         os.startfile(output_folder)
 
 
-def set_output_folder(output_folder):
+def set_output_folder(output_folder: str) -> list:
+    """Validates and sets the output folder for saving generated images, creating it if it doesn't exist.
+
+    Args:
+        output_folder (str): The path to the output folder.
+
+    Returns:
+        list: The output folder path and a string to display in the UI.
+    """
     if os.path.exists(output_folder) and os.path.isdir(output_folder):
         return [
             output_folder,
